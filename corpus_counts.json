@@ -1,0 +1,66 @@
+{
+    "brown": {
+        "numtexts": 500,
+        "percdups": 120,
+        "maxdupstx": 0.2751677852348993,
+        "avgdupstx": 0.042590172459000035,
+        "numsents": 57340,
+        "avgdups": 0.02153819323334496
+    },
+    "gutenberg": {
+        "numtexts": 18,
+        "percdups": 18,
+        "maxdupstx": 0.38647089669638174,
+        "avgdupstx": 0.0948411657840658,
+        "numsents": 98552,
+        "avgdups": 0.06700016235084016
+    },
+    "movie_reviews": {
+        "numtexts": 2000,
+        "percdups": 670,
+        "maxdupstx": 0.7619047619047619,
+        "avgdupstx": 0.12171403899232346,
+        "numsents": 71532,
+        "avgdups": 0.08826818766426214
+    },
+    "webtext": {
+        "numtexts": 6,
+        "percdups": 6,
+        "maxdupstx": 0.227538543328017,
+        "avgdupstx": 0.0849816090511835,
+        "numsents": 25733,
+        "avgdups": 0.07127035324291765
+    },
+    "inaugural": {
+        "numtexts": 60,
+        "percdups": 5,
+        "maxdupstx": 0.09714285714285714,
+        "avgdupstx": 0.03832030203385702,
+        "numsents": 5395,
+        "avgdups": 0.00778498609823911
+    },
+    "state_union": {
+        "numtexts": 65,
+        "percdups": 25,
+        "maxdupstx": 0.24736842105263157,
+        "avgdupstx": 0.06091062654628234,
+        "numsents": 17930,
+        "avgdups": 0.03859453430005577
+    },
+    "bnc": {
+        "numtexts": 4049,
+        "percdups": 3274,
+        "maxdupstx": 0.7971153846153847,
+        "avgdupstx": 0.07591809134057276,
+        "numsents": 6026276,
+        "avgdups": 0.12512486982010118
+    },
+    "childes": {
+        "numtexts": 7167,
+        "percdups": 5810,
+        "maxdupstx": 0.9966329966329966,
+        "avgdupstx": 0.3154426392433762,
+        "numsents": 2202885,
+        "avgdups": 0.5583178422840956
+    }
+}
