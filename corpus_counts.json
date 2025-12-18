@@ -1,66 +1,74 @@
 {
     "brown": {
-        "numtexts": 500,
-        "percdups": 120,
-        "maxdupstx": 0.2751677852348993,
-        "avgdupstx": 0.042590172459000035,
-        "numsents": 57340,
-        "avgdups": 0.02153819323334496
+        "Number of Texts": 500,
+        "Texts with dups": 36,
+        "Max dups per text": 0.2545454545454545,
+        "Avg dups per text": 0.0030237547818360295,
+        "Number of sentences": 54852,
+        "Avg dups per corpus": 0.005815649383796397
     },
     "gutenberg": {
-        "numtexts": 18,
-        "percdups": 18,
-        "maxdupstx": 0.38647089669638174,
-        "avgdupstx": 0.0948411657840658,
-        "numsents": 98552,
-        "avgdups": 0.06700016235084016
+        "Number of Texts": 18,
+        "Texts with dups": 18,
+        "Max dups per text": 0.04513241327862738,
+        "Avg dups per text": 0.0123168655068267,
+        "Number of sentences": 90579,
+        "Avg dups per corpus": 0.011669371487872464
     },
     "movie_reviews": {
-        "numtexts": 2000,
-        "percdups": 670,
-        "maxdupstx": 0.7619047619047619,
-        "avgdupstx": 0.12171403899232346,
-        "numsents": 71532,
-        "avgdups": 0.08826818766426214
+        "Number of Texts": 2000,
+        "Texts with dups": 21,
+        "Max dups per text": 0.746268656716418,
+        "Avg dups per text": 0.0009424447151714305,
+        "Number of sentences": 65161,
+        "Avg dups per corpus": 0.018201071192891452
     },
     "webtext": {
-        "numtexts": 6,
-        "percdups": 6,
-        "maxdupstx": 0.227538543328017,
-        "avgdupstx": 0.0849816090511835,
-        "numsents": 25733,
-        "avgdups": 0.07127035324291765
+        "Number of Texts": 6,
+        "Texts with dups": 5,
+        "Max dups per text": 0.09791216702663787,
+        "Avg dups per text": 0.029573181660802292,
+        "Number of sentences": 23360,
+        "Avg dups per corpus": 0.029751712328767124
     },
     "inaugural": {
-        "numtexts": 60,
-        "percdups": 5,
-        "maxdupstx": 0.09714285714285714,
-        "avgdupstx": 0.03832030203385702,
-        "numsents": 5395,
-        "avgdups": 0.00778498609823911
+        "Number of Texts": 60,
+        "Texts with dups": 2,
+        "Max dups per text": 0.021739130434782608,
+        "Avg dups per text": 0.0006748188405797101,
+        "Number of sentences": 5353,
+        "Avg dups per corpus": 0.0018681113394358303
     },
     "state_union": {
-        "numtexts": 65,
-        "percdups": 25,
-        "maxdupstx": 0.24736842105263157,
-        "avgdupstx": 0.06091062654628234,
-        "numsents": 17930,
-        "avgdups": 0.03859453430005577
+        "Number of Texts": 65,
+        "Texts with dups": 9,
+        "Max dups per text": 0.024822695035460994,
+        "Avg dups per text": 0.0019335657419630554,
+        "Number of sentences": 17370,
+        "Avg dups per corpus": 0.010592976396085205
     },
     "bnc": {
-        "numtexts": 4049,
-        "percdups": 3274,
-        "maxdupstx": 0.7971153846153847,
-        "avgdupstx": 0.07591809134057276,
-        "numsents": 6026276,
-        "avgdups": 0.12512486982010118
+        "Number of Texts": 4049,
+        "Texts with dups": 2613,
+        "Max dups per text": 0.7317397078353254,
+        "Avg dups per text": 0.016458383156721188,
+        "Number of sentences": 5429986,
+        "Avg dups per corpus": 0.05372592120863663
     },
     "childes": {
-        "numtexts": 7167,
-        "percdups": 5810,
-        "maxdupstx": 0.9966329966329966,
-        "avgdupstx": 0.3154426392433762,
-        "numsents": 2202885,
-        "avgdups": 0.5583178422840956
+        "Number of Texts": 7167,
+        "Texts with dups": 4996,
+        "Max dups per text": 1.0,
+        "Avg dups per text": 0.07915059923841168,
+        "Number of sentences": 1282614,
+        "Avg dups per corpus": 0.28422892623969487
+    },
+    "Totals": {
+        "Number of Texts": 13865,
+        "Texts with dups": 7700,
+        "Max dups per text": 1.0,
+        "Avg dups per text": 0.01800920170528901,
+        "Number of sentences": 6969275,
+        "Avg dups per corpus": 0.09666113046192036
     }
 }

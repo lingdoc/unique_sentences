@@ -17,3 +17,8 @@ The following corpora are examined:
 
 The output of the code is released in this repository for ease of access. To re-run
 analyses simply delete the json file. Additions (of languages, corpora) are welcome.
+
+The excel spreadsheet contains basic stats related to the counts of sentences and
+duplicates within texts in corpora, across texts in corpora, and between corpora.
+In order to accurately compute the cross-corpora totals, the saved json file should
+be deleted.

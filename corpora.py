@@ -15,18 +15,21 @@ def check_and_download_nltk_corpus(corpus_name):
 # a filter for punctuation
 translator = str.maketrans('', '', string.punctuation+"，。")
 
-def get_percs(bsents, translator, fsents=[], full=False):
+def get_percs(bsents, translator, fsents=[], full=False, msents=[], master=False, n=3):
     """
     Get percentages of exact matches from a list of sentences.
     `bsents`:       the list of sentences
     `translator`:   the punctuation remover
-    `fsents`:       a list of final sentences to track cross-corpora matches
-    `full`:         whether or not to track cross-corpora matches
+    `fsents`:       a list of final sentences to track cross-text matches
+    `full`:         whether or not to track cross-text matches
+    `msents`:       a master list of final sentences to track cross-corpora matches
+    `master`:       whether or not to track cross-corpora matches
     """
-    # remove punctuation and lowercase
-    bsents = [" ".join(x).translate(translator).lower() for x in bsents]
+
     # bsents = [" ".join(x) for x in bsents] # uncomment to not lowercase or remove punctuation
-    
+    bsents = [" ".join(x).translate(translator).lower() for x in bsents] # remove punctuation and lowercase
+    bsents = [x for x in bsents if len(x.split()) >= n] # only include sentences of n+ words
+
     bdict = Counter(bsents) # dict to store the unique sentences
     # print("Sentences in text:", len(bsents))
     # print("Length of counter:", len(bdict))
@@ -37,7 +40,9 @@ def get_percs(bsents, translator, fsents=[], full=False):
 
     # add all sentences to a master list for this corpus if requested
     if full == True:
-        fsents += bsents
+        fsents += [x.split() for x in bsents]
+    if master == True:
+        msents += [x.split() for x in bsents]
 
     if ysums > 0:
         result = xsums/(xsums+ysums)
@@ -62,13 +67,15 @@ else:
 # this is the list of corpora that we want to access
 corplist = ['brown', 'gutenberg', 'movie_reviews', 'webtext', 'inaugural',
             'state_union', 'bnc', 'childes']
+wordnum = 3 # the minimum number of words in a sentence for comparison
+msents = [] # a master list of sentences in all corpora
 
 # go through each of the corpora
 for ccorp in tqdm(corplist):
     # check if the corpus has been analyzed previously
     # (delete the json file or remove the entry to re-run analyses)
     if ccorp not in corpcdict.keys():
-        print(f'Now counting duplicates in the `{ccorp}` corpus..')
+        print(f'Now counting dups in the `{ccorp}` corpus..')
         corpcdict[ccorp] = {} # the corpus key to store info
         fsents = [] # a list to keep track of sentences
         allcounts = [] # list to keep track of the counts
@@ -92,38 +99,60 @@ for ccorp in tqdm(corplist):
             exec(f'from nltk.corpus import {ccorp} as b') # then import it
 
         # once the respective corpus has been imported, we can access the sentences programmatically
+        # the `fileids` field accesses an individual text in a corpus
         for corp in tqdm(b.fileids()):
             bsents = b.sents(corp)
-            allcounts.append(get_percs(bsents, translator, fsents, full=True))
+            # print(f"Checking the {corp} dataset:\n{bsents[:10]}")
+            ## here we get counts within a text, storing sentences in larger lists
+            allcounts.append(get_percs(bsents, translator, fsents=fsents, full=True, msents=msents, master=True, n=wordnum))
 
         print("Total texts:", len(allcounts))
         bcounts = [x for x in allcounts if x > 0]
         print("Total with dups:", len(bcounts))
         # print(f'{ccorp} total subcorpora: {len(bcounts)}')
-        corpcdict[ccorp]['numtexts'] = len(allcounts)
-        corpcdict[ccorp]['percdups'] = len(bcounts)
+        corpcdict[ccorp]['Number of Texts'] = len(allcounts)
+        corpcdict[ccorp]['Texts with dups'] = len(bcounts)
         # print(f'{ccorp} highest percentage of dups in a text: {max(bcounts)}')
         try:
-            corpcdict[ccorp]['maxdupstx'] = max(bcounts)
+            corpcdict[ccorp]['Max dups per text'] = max(bcounts)
         except:
-            corpcdict[ccorp]['percdupstx'] = 0
+            corpcdict[ccorp]['Max dups per text'] = 0
         # print(f'{ccorp} average percentage of dups per text: {statistics.mean(bcounts)}')
         try:
-            corpcdict[ccorp]['avgdupstx'] = statistics.mean(bcounts)
+            corpcdict[ccorp]['Avg dups per text'] = statistics.mean(allcounts)
         except:
-            corpcdict[ccorp]['avgdupstx'] = 0
+            corpcdict[ccorp]['Avg dups per text'] = 0
 
         # print(f'{ccorp} corpus total sentences: {len(fsents)}')
-        corpcdict[ccorp]['numsents'] = len(fsents)
+        corpcdict[ccorp]['Number of sentences'] = len(fsents)
         # print(f'{ccorp} corpus average percent dups: {get_percs(fsents, translator)}')
-        corpcdict[ccorp]['avgdups'] = get_percs(fsents, translator)
+        corpcdict[ccorp]['Avg dups per corpus'] = get_percs(fsents, translator)
 
+# create a new dict to store totals - this can only be generated accurately by
+# re-running all analyses (delete json), since it requires a master list of all
+# sentences in order to id matching sentences across corpora
+ndict = {"Totals": {}}
+ndict["Totals"]['Number of Texts'] = sum([corpcdict[corp]['Number of Texts'] for corp in corpcdict.keys()])
+ndict["Totals"]['Texts with dups'] = sum([corpcdict[corp]['Texts with dups'] for corp in corpcdict.keys()])
+ndict["Totals"]['Max dups per text'] = max([corpcdict[corp]['Max dups per text'] for corp in corpcdict.keys()])
+ndict["Totals"]['Avg dups per text'] = statistics.mean([corpcdict[corp]['Avg dups per text'] for corp in corpcdict.keys()])
+ndict["Totals"]['Number of sentences'] = sum([corpcdict[corp]['Number of sentences'] for corp in corpcdict.keys()])
+total = get_percs(msents, translator)
+ndict["Totals"]['Avg dups per corpus'] = total
+
+corpcdict['Totals'] = ndict['Totals'] # store the results in our combined dict
+print(f"total percentage across corpora: {total}")
 print(corpcdict) # print the results to terminal
 
 # write the results to the json file
 with open(filestr, 'w', encoding='utf-8') as f:
     json.dump(corpcdict, f, ensure_ascii=False, indent=4)
 
+# store the results in a dataframe
+df = pd.DataFrame.from_dict(corpcdict, orient='index').reset_index(names=f'Corpus ({wordnum}+ words)')
+# convert the following columns to percentages
+convert = ['Avg dups per text', 'Avg dups per corpus']
+for col in convert:
+    df[col+"_perc"] = df[col].round(decimals=4)*100
 # write the results to an excel spreadsheet with the corpus names as index
-df = pd.DataFrame.from_dict(corpcdict, orient='index')
-df.to_excel(filen+'.xlsx')
+df.to_excel(filen+'-'+str(wordnum)+'+words.xlsx', index=False)
